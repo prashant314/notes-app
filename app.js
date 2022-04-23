@@ -1,18 +1,10 @@
-// const fs = require('fs')
-// const add = require('./utils.js')
-// fs.writeFileSync('notes.txt','Author - Prashant.')
-// fs.appendFileSync('notes.txt','Created on 10/11/20')
-// const sum = add(2,6);
-// console.log(sum);
-
 const notes = require('./notes.js');
 const yargs = require('yargs')
 
-// console.log(notes); 
-// console.log(process.argv);
-
 // Customize yargs version
 yargs.version('1.1.0')
+
+// add, remove, read, list commands
 
 //Create add command
 yargs.command({
@@ -66,12 +58,16 @@ yargs.command({
 yargs.command({
     command: 'read',
     describe: 'Read the note',
-    handler () {
-        console.log('Reading the note');
+    builder: {
+        title: {
+            describe: 'Note title',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler (argv) {
+        notes.readNote(argv.title);
     }
 })
 
-// add, remove, read, list
-
-
-console.log(yargs.argv);
+yargs.parse()
